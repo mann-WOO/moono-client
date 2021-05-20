@@ -1,7 +1,10 @@
 <template>
   <div>
-    <p v-for="movie in movies" :key="movie.id">
-      {{ movie.title }}
+    <p v-for="movie in movies" 
+    :key="movie.id">
+    <router-link :to="{ name: 'MovieDetail', params: {id: movie.id}}">
+    {{ movie.title }}
+    </router-link>
     </p>
   </div>
 </template>
