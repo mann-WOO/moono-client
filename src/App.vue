@@ -1,12 +1,35 @@
 <template>
   <div id="app">
+    <div v-if="this.$store.state.userToken">
+      <p>Hi! {{ this.$store.getters.decodedToken.username }}</p>
+    </div>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/movies">Movies</router-link>
+      <router-link :to="{ name:'Home' }">Home</router-link> |
+      <router-link :to="{ name:'Movies'}">Movies</router-link> |
+      <router-link :to="{ name:'Articles'}">Articles</router-link> |
+      <router-link :to="{ name:'ArticleNew'}">Write</router-link> |
+      <!-- Login/Logout -->
+      <router-link :to="{ name:'Login' }" v-if="!this.$store.state.userToken">
+        Login
+      </router-link>
+      <router-link to="#" @click.native="deleteToken" v-else>Logout</router-link>
+      <!-- Login/Logout -->
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  methods: {
+    deleteToken: function () {
+      this.$store.dispatch('deleteToken')
+    }
+  }
+}
+</script>
+
 
 <style>
 #app {
