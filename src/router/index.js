@@ -8,6 +8,7 @@ import Login from '@/views/Login.vue'
 import Articles from '@/views/Articles.vue'
 import ArticleNew from '@/views/ArticleNew.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
+import ArticleUpdate from '@/views/ArticleUpdate.vue'
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,11 @@ const routes = [
     name: 'ArticleDetail',
     component: ArticleDetail
   },
+  {
+    path: '/articles/:id/update',
+    name: 'ArticleUpdate',
+    component: ArticleUpdate
+  }
 ]
 
 const router = new VueRouter({

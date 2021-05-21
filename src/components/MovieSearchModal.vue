@@ -8,7 +8,8 @@
       </div>
       <!-- modal body -->
       <div class="modal-body">
-        <input type="text" v-model="searchInput"> <button @click="searchMovie">search</button>
+        <input type="text" v-model="searchInput" @keyup.enter="searchMovie">
+        <button @click="searchMovie">search</button>
         <div v-if="searchedMovies">
           <br>
           <p v-for="movie in searchedMovies" :key="movie.id">
@@ -43,6 +44,7 @@ export default {
     selectMovie: function (title, id) {
       this.$emit('select-movie', title, id)
       this.$store.dispatch('resetSearchedMovies')
+      this.searchInput = ''
     }
   },
   computed: {

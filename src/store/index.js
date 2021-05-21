@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate"
 import jwt_decode from "jwt-decode"
+import router from '../router'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -42,9 +43,18 @@ export default new Vuex.Store({
     },
     RESET_SEARCHED_MOVIES: function (state) {
       state.searchedMovies = null
+    },
+    CREATE_COMMENT: function (state, comment) {
+      state.articleDetail.comment_set.push(comment)
+    },
+    DELETE_COMMENT: function (state, commentId) {
+      state.articleDetail.comment_set = state.articleDetail.comment_set.filter((comment) => {
+        return comment.id != commentId
+      })
     }
   },
   actions: {
+    // 영화목록 불러오기
     getMovies: function (context) {
       axios({
         method: 'get',
@@ -54,6 +64,7 @@ export default new Vuex.Store({
         context.commit('GET_MOVIES', res.data)
       })
     },
+    // 개별 영화 정보 불러오기
     getMovieDetail: function (context, movieId) {
       axios({
         method: 'get',
@@ -66,6 +77,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    // JWT 토큰 발급받기(로그인)
     getToken: function (context, credentials) {
       axios({
         method: 'post',
@@ -74,11 +86,15 @@ export default new Vuex.Store({
       })
         .then((res) => {
           context.commit('GET_TOKEN', res.data.token)
+          router.push( {name:'Home'} )
         })
     },
+    // JWT 토큰 삭제(로그아웃)
     deleteToken: function (context) {
       context.commit('DELETE_TOKEN')
+      router.push({ name:'Login' })
     },
+    // 글 목록 불러오기
     getArticles: function (context) {
       axios({
         method: 'get',
@@ -91,6 +107,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    // 개별 글 정보 불러오기
     getArticleDetail: function (context, articleId) {
       axios({
         method: 'get',
@@ -100,6 +117,7 @@ export default new Vuex.Store({
           context.commit('GET_ARTICLE_DETAIL', res.data)
         })
     },
+    // 제목에 특정 단어를 포함한 영화 목록 불러오기
     // 검색한 단어를 포함한 영화가 있다면 리스트를 반환, 아니라면 null 반환
     searchMovie: function (context, searchWord) {
       axios({
@@ -121,9 +139,11 @@ export default new Vuex.Store({
         }
       })
     },
+    // 검색영화 목록 초기화하기
     resetSearchedMovies: function (context) {
       context.commit('RESET_SEARCHED_MOVIES')
     },
+    // 글 생성
     createArticle: function (context, articleData) {
       axios({
         method: 'post',
@@ -137,6 +157,55 @@ export default new Vuex.Store({
           console.log(res)
         })
         .then((err) => {
+          console.log(err)
+        })
+    },
+    // 글 삭제
+    deleteArticle: function  (context, articleId) {
+      axios({
+        method: 'delete',
+        url: `${SERVER_URL}/articles/${articleId}/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then(() => {
+          router.push({ name:'Articles' })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 댓글 생성
+    createComment: function (context, commentData) {
+      axios({
+        method: 'post',
+        url: `${SERVER_URL}/articles/${commentData.article}/comments/`,
+        data: commentData,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('CREATE_COMMENT', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 댓글 삭제
+    deleteComment: function (context, commentId) {
+      axios({
+        method: 'delete',
+        url: `${SERVER_URL}/articles/comments/${commentId}/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then(() => {
+          context.commit('DELETE_COMMENT', commentId)
+        })
+        .catch((err) => {
           console.log(err)
         })
     }
