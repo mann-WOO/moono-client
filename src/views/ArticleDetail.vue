@@ -1,13 +1,24 @@
 <template>
   <div>
-    <p v-html="articleDetail.content"></p>
+    <!-- article contents -->
+    <p v-html="articleDetail"></p>
+
+    <!-- article edit -->
     <router-link :to="{ name:'ArticleUpdate' }">
       <button>edit</button>
     </router-link>
     
-    <!-- 추후 모달로 업데이트 -->
+    <!-- 삭제 - 추후 모달로 업데이트 -->
     <button @click="deleteArticle">delete</button>
 
+    <br>
+    <!-- like -->
+    <button @click="toggleLike" v-show="!likeStatus">
+      like
+    </button>
+    <button @click="toggleLike" v-show="likeStatus">
+      unlike
+    </button>
     <hr>
     <!-- 댓글 -->
     <Comment :articleDetail="articleDetail"/>
@@ -28,11 +39,17 @@ export default {
   computed: {
     articleDetail: function () {
       return this.$store.state.articleDetail
+    },
+    likeStatus: function () {
+      return this.articleDetail.like_users.includes(this.$store.getters.decodedToken.user_id)
     }
   },
   methods: {
     deleteArticle: function () {
       this.$store.dispatch('deleteArticle', this.$route.params.id)
+    },
+    toggleLike: function () {
+      this.$store.dispatch('toggleLike', this.$route.params.id)
     }
   }
 }

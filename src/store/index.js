@@ -51,6 +51,15 @@ export default new Vuex.Store({
       state.articleDetail.comment_set = state.articleDetail.comment_set.filter((comment) => {
         return comment.id != commentId
       })
+    },
+    TOGGLE_LIKE: function (state, likeStatus) {
+      if (likeStatus) {
+        state.articleDetail.like_users.push(this.getters.decodedToken.user_id)
+      } else {
+        state.articleDetail.like_users = state.articleDetail.like_users.filter((userId) => {
+          return userId != this.getters.decodedToken.user_id
+        })
+      }
     }
   },
   actions: {
@@ -154,7 +163,8 @@ export default new Vuex.Store({
         }
       })
         .then((res) => {
-          console.log(res)
+          // 만들어진 article로 push 시켜주기
+          router.push({ name: 'ArticleDetail', params: {id: res.data.id} })
         })
         .then((err) => {
           console.log(err)
@@ -204,6 +214,22 @@ export default new Vuex.Store({
       })
         .then(() => {
           context.commit('DELETE_COMMENT', commentId)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 좋아요, 좋아요 취소
+    toggleLike: function (context, articleId) {
+      axios({
+        method: 'post',
+        url: `${SERVER_URL}/articles/${articleId}/like/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('TOGGLE_LIKE', res.data.like)
         })
         .catch((err) => {
           console.log(err)
