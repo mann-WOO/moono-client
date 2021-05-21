@@ -271,7 +271,7 @@ export default new Vuex.Store({
         }
       })
         .then((res) => {
-          context.commite('TOGGLE_FOLLOW', res.data.follow)
+          context.commit('TOGGLE_FOLLOW', res.data.follow)
         })
         .catch((err) => {
           console.log(err)
