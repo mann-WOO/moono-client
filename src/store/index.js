@@ -17,7 +17,8 @@ export default new Vuex.Store({
     userToken: null,
     articles: null,
     articleDetail: null,
-    searchedMovies: null
+    searchedMovies: null,
+    userProfile: null,
   },
   mutations: {
     GET_MOVIES: function (state, movies) {
@@ -57,6 +58,18 @@ export default new Vuex.Store({
         state.articleDetail.like_users.push(this.getters.decodedToken.user_id)
       } else {
         state.articleDetail.like_users = state.articleDetail.like_users.filter((userId) => {
+          return userId != this.getters.decodedToken.user_id
+        })
+      }
+    },
+    GET_PROFILE: function (state, userProfile) {
+      state.userProfile = userProfile
+    },
+    TOGGLE_FOLLOW: function (state, followStatus) {
+      if (followStatus) {
+        state.userProfile.followers.push(this.getters.decodedToken.user_id)
+      } else {
+        state.userProfile.followers = state.userProfile.followers.filter((userId) => {
           return userId != this.getters.decodedToken.user_id
         })
       }
@@ -230,6 +243,35 @@ export default new Vuex.Store({
       })
         .then((res) => {
           context.commit('TOGGLE_LIKE', res.data.like)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 프로필 정보 가져오기
+    getProfile: function (context, username) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/accounts/${username}/`
+      })
+        .then((res) => {
+          context.commit('GET_PROFILE', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 팔로우, 팔로우취소
+    toggleFollow: function (context, username) {
+      axios({
+        method: 'post',
+        url: `${SERVER_URL}/accounts/${username}/follow/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commite('TOGGLE_FOLLOW', res.data.follow)
         })
         .catch((err) => {
           console.log(err)

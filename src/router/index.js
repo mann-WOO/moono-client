@@ -9,6 +9,7 @@ import Articles from '@/views/Articles.vue'
 import ArticleNew from '@/views/ArticleNew.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
 import ArticleUpdate from '@/views/ArticleUpdate.vue'
+import Profile from '@/views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/accounts/:username',
+    name: 'Profile',
+    component: Profile
+  },
   // Articles App
   {
     path: '/articles',
@@ -61,7 +67,7 @@ const routes = [
     path: '/articles/:id/update',
     name: 'ArticleUpdate',
     component: ArticleUpdate
-  }
+  },
 ]
 
 const router = new VueRouter({

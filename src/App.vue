@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <div v-if="this.$store.state.userToken">
-      <p>Hi! {{ this.$store.getters.decodedToken.username }}</p>
-    </div>
     <div id="nav">
       <router-link :to="{ name:'Home' }">Home</router-link> |
       <router-link :to="{ name:'Movies'}">Movies</router-link> |
       <router-link :to="{ name:'Articles'}">Articles</router-link> |
       <router-link :to="{ name:'ArticleNew'}">Write</router-link> |
+      <!-- Profile -->
+      <router-link 
+      :to="{ name:'Profile', params:{username:this.$store.getters.decodedToken.username} }" 
+      v-if="this.$store.state.userToken">
+        Profile |
+      </router-link>
       <!-- Login/Logout -->
+      <!-- Login -->
       <router-link :to="{ name:'Login' }" v-if="!this.$store.state.userToken">
         Login
       </router-link>
+      <!-- Logout -->
       <router-link to="#" @click.native="deleteToken" v-else>Logout</router-link>
       <!-- Login/Logout -->
     </div>
