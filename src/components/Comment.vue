@@ -3,9 +3,10 @@
     <h3>Comments</h3>
     <div v-if="articleDetail.comment_set.length">
       <p v-for="comment in articleDetail.comment_set" 
-      :key="comment.id">
-        {{comment.content}}
-        <button>edit</button>
+      :key="comment.id"
+      :id="'comment-' + comment.id">
+        <span>{{comment.content}}</span>
+        <button @click="startEdit(comment.id)">edit</button>
         <button @click="deleteComment(comment.id)">delete</button>
       </p>
     </div>
@@ -37,6 +38,10 @@ export default {
     },
     deleteComment: function (commentId) {
       this.$store.dispatch('deleteComment', commentId)
+    },
+    startEdit: function(commentId) {
+      const targetComment = document.querySelector(`#comment-${commentId}`)
+      console.log(targetComment)
     }
   }
 }
