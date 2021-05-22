@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- follow -->
-    <button @click="togglefollow" v-show="!followStatus">
+    <button @click="toggleFollow" v-show="!followStatus">
       follow
     </button>
-    <button @click="togglefollow" v-show="followStatus">
+    <button @click="toggleFollow" v-show="followStatus">
       unfollow
     </button>
     <hr>
