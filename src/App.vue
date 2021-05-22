@@ -64,4 +64,31 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.full-center {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-primary {
+  background-color: #61BFAD !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
+
+.btn-outline-primary {
+  color: #61BFAD;
+  border-color: #61BFAD;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
 </style>

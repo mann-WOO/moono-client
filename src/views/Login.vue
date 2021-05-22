@@ -1,16 +1,18 @@
 <template>
-  <div>
-    <h1>Login</h1>
-    <p>ID</p>
-    <input type="text" v-model="credentials.username">
-    <p>PW</p>
-    <input type="password" @keyup.enter="getToken" v-model="credentials.password">
-    <br>
-    <br>
-    <button @click="getToken">Login</button>
-    <br>
-    <br>
-    <router-link :to="{ name:'Signup' }">Sign up</router-link>
+  <div class="full-center d-flex align-items-center justify-content-center">
+    <div>
+      <h1>Login</h1>
+      <p>ID</p>
+      <input type="text" v-model="credentials.username">
+      <p>PW</p>
+      <input type="password" @keyup.enter="getToken" v-model="credentials.password">
+      <br>
+      <br>
+      <button @click="getToken">Login</button>
+      <br>
+      <br>
+      <router-link :to="{ name:'Signup' }">Sign up</router-link>
+    </div>
   </div>
 </template>
 
@@ -33,6 +35,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
