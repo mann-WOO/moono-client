@@ -1,32 +1,39 @@
 <template>
   <div id="app">
+    <Navbar/>
+    <!-- 
     <div id="nav">
       <router-link :to="{ name:'Home' }">Home</router-link> |
       <router-link :to="{ name:'Movies'}">Movies</router-link> |
       <router-link :to="{ name:'Articles'}">Articles</router-link> |
       <router-link :to="{ name:'ArticleNew'}">Write</router-link> |
-      <!-- Profile -->
+
       <router-link 
       :to="{ name:'Profile', params:{username:this.$store.getters.decodedToken.username} }" 
       v-if="this.$store.state.userToken">
         Profile |
       </router-link>
-      <!-- Login/Logout -->
-      <!-- Login -->
+
       <router-link :to="{ name:'Login' }" v-if="!this.$store.state.userToken">
         Login
       </router-link>
-      <!-- Logout -->
+
       <router-link to="#" @click.native="deleteToken" v-else>Logout</router-link>
-      <!-- Login/Logout -->
+
     </div>
+     -->
     <router-view/>
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue'
+
 export default {
   name: 'App',
+  components: {
+    Navbar
+  },
   methods: {
     deleteToken: function () {
       this.$store.dispatch('deleteToken')
@@ -56,5 +63,32 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.full-center {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-primary {
+  background-color: #61BFAD !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
+
+.btn-outline-primary {
+  color: #61BFAD;
+  border-color: #61BFAD;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
 }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div>
     <!-- article contents -->
-    <p v-html="articleDetail"></p>
+    <p v-text="articleDetail"></p>
 
+    
     <!-- article edit -->
-    <router-link :to="{ name:'ArticleUpdate' }">
+    <!-- <router-link :to="{ name:'ArticleUpdate' }">
       <button>edit</button>
-    </router-link>
+    </router-link> -->
     
     <!-- 삭제 - 추후 모달로 업데이트 -->
     <button @click="deleteArticle">delete</button>

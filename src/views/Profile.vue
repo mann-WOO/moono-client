@@ -9,7 +9,7 @@
     </button>
     <hr>
     <!-- profile contents -->
-    {{ userProfile }}
+    <p>{{ userProfile }}</p>
 
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     },
     followStatus: function () {
       return this.userProfile.followers.includes(this.$store.getters.decodedToken.user_id)
-    }
+    },
   },
   methods: {
     toggleFollow: function () {
