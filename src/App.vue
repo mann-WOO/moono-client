@@ -65,10 +65,10 @@ export default {
   color: #42b983;
 }
 
-.full-center {
+.section {
   position: absolute;
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 
 .bg-primary {

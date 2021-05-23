@@ -1,5 +1,5 @@
 <template>
-  <div class="full-center d-flex align-items-center justify-content-center">
+  <div class="section d-flex align-items-center justify-content-center">
     <div>
       <h1>Login</h1>
       <p>ID</p>

@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <h1>Signup</h1>
-    <p>ID</p>
-    <input type="text" v-model="credentials.username">
-    <p>PW</p>
-    <input type="password" v-model="credentials.password">
-    <p>PW Confirmation</p>
-    <input type="password" @keyup.enter="signup" v-model="credentials.passwordConfirmation">
-    <br>
-    <br>
-    <button @click="signup">Signup</button>
+  <div class="section d-flex align-items-center justify-content-center">
+      <div>
+      <h1>Signup</h1>
+      <p>ID</p>
+      <input type="text" v-model="credentials.username">
+      <p>PW</p>
+      <input type="password" v-model="credentials.password">
+      <p>PW Confirmation</p>
+      <input type="password" @keyup.enter="signup" v-model="credentials.passwordConfirmation">
+      <br>
+      <br>
+      <button @click="signup">Signup</button>
+    </div>
   </div>
 </template>
 
