@@ -1,17 +1,13 @@
 <template>
   <div class="section d-flex align-items-center justify-content-center">
-    <div>
-      <h1>Login</h1>
-      <p>ID</p>
+    <div class="d-flex flex-column align-items-center">
+      <h1 class="my-3">Login</h1>
+      <p class="my-1">ID</p>
       <input type="text" v-model="credentials.username">
-      <p>PW</p>
+      <p class="mt-3 mb-1">PW</p>
       <input type="password" @keyup.enter="getToken" v-model="credentials.password">
-      <br>
-      <br>
-      <button @click="getToken">Login</button>
-      <br>
-      <br>
-      <router-link :to="{ name:'Signup' }">Sign up</router-link>
+      <button @click="getToken" class="my-3 py-1 d-block btn btn-outline-primary">Login</button>
+      <p>아직 회원이 아니세요? <router-link :to="{ name:'Signup' }">Sign up</router-link></p>
     </div>
   </div>
 </template>
