@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light my-3">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light my-3">
   <div class="container-fluid">
     <!-- 로고 -->
     <a class="navbar-brand" href="#">
