@@ -2,10 +2,10 @@
   <nav class="navbar fixed-top navbar-expand-lg navbar-light my-3">
   <div class="container-fluid">
     <!-- 로고 -->
-    <a class="navbar-brand" href="#">
-      <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-      Service Name
-    </a>
+    <router-link class="navbar-brand d-flex align-items-center gap-2" :to="{ name:'Home' }">
+      <img src="@/assets/images/octopus.svg" alt="octopus logo" class="d-inline-block align-text-top logo">
+      <h2 class="mb-0">MOONO</h2>
+    </router-link>
 
     <!-- 라우터 링크 리스트 -->
     <div v-if="this.$store.state.userToken">
@@ -57,5 +57,7 @@ export default {
 </script>
 
 <style>
-
+  .logo {
+    width: 2.5rem;
+  }
 </style>

@@ -1,21 +1,22 @@
 <template>
-  <div>
-    <p>Title</p>
-    <input type="text" v-model="articleTitle">
-    <p>Select Movie</p>
-    <input disabled type="text" v-model="movieTitle">
-    <!-- button trigger modal -->
-    <button data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Search
-    </button>
-    <!-- Modal -->
-    <MovieSearchModal @select-movie="onSelect"/>
-    <br>
-    <br>
-    <p>Content</p>
-    <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-    <br>
-    <button @click="createArticle">submit</button>
+  <div class="section d-flex align-items-center justify-content-center container">
+    <div class="d-flex flex-column align-items-start">
+      <p class="mb-0">Title</p>
+      <input class="my-1" type="text" v-model="articleTitle">
+      <p class="mt-2 mb-0">Select Movie</p>
+      <div class="d-flex">
+        <input class="me-1" disabled type="text" v-model="movieTitle">
+        <!-- button trigger modal -->
+        <button class="btn btn-outline-secondary py-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Search
+        </button>
+      </div>
+      <!-- Modal -->
+      <MovieSearchModal @select-movie="onSelect"/>
+      <p class="mt-2 mb-0">Content</p>
+      <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+      <button class="mt-1 py-1 btn btn-outline-primary" @click="createArticle">submit</button>
+    </div>
   </div>
 </template>
 
