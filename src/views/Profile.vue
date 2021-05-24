@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <!-- follow -->
-    <button @click="toggleFollow" v-show="!followStatus">
-      follow
-    </button>
-    <button @click="toggleFollow" v-show="followStatus">
-      unfollow
-    </button>
-    <hr>
-    <!-- profile contents -->
-    <p>{{ userProfile }}</p>
+  <div class="d-flex mt-5 pt-5">
+    <div class="d-flex flex-column align-items-center">
+      <h1>{{ this.$route.params.username }}'s Profile</h1>
+      <!-- follow -->
+      <button @click="toggleFollow" v-show="!followStatus">
+        follow
+      </button>
+      <button @click="toggleFollow" v-show="followStatus">
+        unfollow
+      </button>
+      <hr>
+      <!-- profile contents -->
+      <p>{{ userProfile }}</p>
 
+    </div>
   </div>
 </template>
 

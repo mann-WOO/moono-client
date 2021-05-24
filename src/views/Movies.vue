@@ -1,11 +1,13 @@
 <template>
-  <div class="container">
-    <h4 class="text-start fw-bold">영화</h4>
+  <div class="d-flex flex-column mt-5 pt-5">
+    <div class="container">
+      <h4 class="text-start fw-bold">영화</h4>
       <splide :options="options">
         <splide-slide v-for="movie in movies" :key="movie.id">
           <Movie :movie="movie"/>
         </splide-slide>
       </splide>
+    </div>
   </div>
 </template>
 
