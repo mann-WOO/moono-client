@@ -1,27 +1,6 @@
 <template>
   <div id="app">
     <Navbar/>
-    <!-- 
-    <div id="nav">
-      <router-link :to="{ name:'Home' }">Home</router-link> |
-      <router-link :to="{ name:'Movies'}">Movies</router-link> |
-      <router-link :to="{ name:'Articles'}">Articles</router-link> |
-      <router-link :to="{ name:'ArticleNew'}">Write</router-link> |
-
-      <router-link 
-      :to="{ name:'Profile', params:{username:this.$store.getters.decodedToken.username} }" 
-      v-if="this.$store.state.userToken">
-        Profile |
-      </router-link>
-
-      <router-link :to="{ name:'Login' }" v-if="!this.$store.state.userToken">
-        Login
-      </router-link>
-
-      <router-link to="#" @click.native="deleteToken" v-else>Logout</router-link>
-
-    </div>
-     -->
     <router-view/>
   </div>
 </template>
@@ -45,7 +24,6 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -90,5 +68,24 @@ export default {
   color: #fff;
   background-color: #61BFAD;
   border-color: #61BFAD;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(28, 160, 138, 0.705);
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+  color:  #61BFAD;
+  background-color: transparent;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color:  #61BFAD;
+  border-color:  #61BFAD;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(28, 160, 138, 0.705);
 }
 </style>

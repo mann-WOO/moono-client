@@ -62,5 +62,10 @@ export default {
 </script>
 
 <style>
-
+.ck-editor__editable{
+  height: 500px;
+}
+.ck.ck-editor{
+  width: 1000px
+}
 </style>

@@ -19,6 +19,7 @@ export default new Vuex.Store({
     articleDetail: null,
     searchedMovies: null,
     userProfile: null,
+    userMovieRank: null,
   },
   mutations: {
     GET_MOVIES: function (state, movies) {
@@ -73,6 +74,12 @@ export default new Vuex.Store({
           return userId != this.getters.decodedToken.user_id
         })
       }
+    },
+    SET_RATING: function (state, rank) {
+      state.userMovieRank = rank
+    },
+    GET_USER_MOVIE_RANK: function (state, rank) {
+      state.userMovieRank = rank
     }
   },
   actions: {
@@ -277,6 +284,41 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    // 별점 부여
+    setRating: function (context, ratingData) {
+      axios({
+        method: 'post',
+        url: `${SERVER_URL}/movies/${ratingData.movieId}/rank/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        },
+        data: {
+          rank: ratingData.score
+        }
+      })
+        .then((res) => {
+          context.commit('SET_RATING', res.data.rank)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 유저가 접속한 movieDetail에 부여한 별점 확인
+    getUserMovieRank: function (context, movieId) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/${movieId}/rank/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('GET_USER_MOVIE_RANK', res.data.score)
+        })
+        .catch(() => {
+          context.commit('GET_USER_MOVIE_RANK', null)
+        })
+    }
   },
   getters: {
     decodedToken: function (state) {

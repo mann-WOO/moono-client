@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-light p-4">
-    <p class="text-start h4 fw-bold px-3 pb-3 mb-0">이야기</p>
-    <div class="container">
+  <div class="bg-light mt-5">
+    <div class="container pt-5">
+      <p class="text-start h4 fw-bold px-3 pb-3 mb-0">이야기</p>
       <splide :options="options">
         <splide-slide class="" v-for="article in articles" :key="article.id">
           <Article :article="article"/>
