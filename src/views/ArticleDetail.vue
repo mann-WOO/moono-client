@@ -1,26 +1,42 @@
 <template>
-  <div>
-    <!-- article contents -->
-    <p v-text="articleDetail"></p>
+  <div class="d-flex flex-column mt-5 pt-5">
+    <div class="container mt-5">
+      <div class="d-flex flex-column align-items-center">
+        <!-- head -->
+        <h2 class="mb-3">{{ articleDetail.title }}</h2>
+        <p class="mb-0">about {{ articleMovieTitle }}</p>
+        <p class="mb-0">
+          <span>{{ articleDetail.created_at.slice(0,10) }} • </span>
+          <span>by {{articleDetail.user.username}}</span>
+        </p>
+        <hr>
+        <!-- article contents -->
+        <div class="a-detail-content">
+          <p v-html="articleDetail.content"></p>
+        </div>
+        <!-- like / delete buttons -->
+        <div class="article-buttons d-flex justify-content-end">
+          <!-- like button -->
+          <div>
+            <button class="btn btn-outline-primary py-1 button-width" @click="toggleLike" v-show="!likeStatus">
+              like
+            </button>
+            <button class="btn btn-primary py-1 button-width" @click="toggleLike" v-show="likeStatus">
+              unlike
+            </button>
+          </div>
+          <!-- delete button 추후 모달로 업데이트 -->
+          <div v-if="isMyArticle" class="ms-3">
+            <button class="btn btn-outline-danger py-1 button-width" @click="deleteArticle">delete</button>
+          </div>
+        </div>
+        <!-- article content end -->
+        <hr>
+      </div>
+    </div>
 
-    
-    <!-- article edit -->
-    <!-- <router-link :to="{ name:'ArticleUpdate' }">
-      <button>edit</button>
-    </router-link> -->
-    
-    <!-- 삭제 - 추후 모달로 업데이트 -->
-    <button @click="deleteArticle">delete</button>
 
-    <br>
-    <!-- like -->
-    <button @click="toggleLike" v-show="!likeStatus">
-      like
-    </button>
-    <button @click="toggleLike" v-show="likeStatus">
-      unlike
-    </button>
-    <hr>
+
     <!-- 댓글 -->
     <Comment :articleDetail="articleDetail"/>
   </div>
@@ -43,6 +59,15 @@ export default {
     },
     likeStatus: function () {
       return this.articleDetail.like_users.includes(this.$store.getters.decodedToken.user_id)
+    },
+    articleMovieTitle: function () {
+      const articleMovie = this.$store.state.movies.find((movie) => {
+        return movie.id === this.articleDetail.movie
+      })
+      return articleMovie.title
+    },
+    isMyArticle: function () {
+      return this.articleDetail.user.username===this.$store.getters.decodedToken.username
     }
   },
   methods: {
@@ -56,6 +81,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .a-detail-content {
+    width: 65%;
+  }
+  .article-buttons {
+    width: 65%;
+  }
+  .button-width {
+    width: 4.5rem;
+  }
 </style>

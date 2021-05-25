@@ -1,17 +1,21 @@
 <template>
-  <div>
-    <h3>Comments</h3>
-    <div v-if="articleDetail.comment_set.length">
-      <p v-for="comment in articleDetail.comment_set" 
-      :key="comment.id"
-      :id="'comment-' + comment.id">
-        <span>{{comment.content}}</span>
-        <button @click="startEdit(comment.id)">edit</button>
-        <button @click="deleteComment(comment.id)">delete</button>
-      </p>
+  <div class="container comment-container">
+    <div class="d-flex flex-column align-items-start">
+      <h3>Comments</h3>
+      <div v-if="articleDetail.comment_set.length">
+        <p v-for="comment in articleDetail.comment_set" 
+        :key="comment.id"
+        :id="'comment-' + comment.id">
+          <span>{{comment.content}}</span>
+          <button @click="startEdit(comment.id)">edit</button>
+          <button @click="deleteComment(comment.id)">delete</button>
+        </p>
+      </div>
+      <div class="d-flex">
+        <input type="text" v-model="commentContent" class="me-1 comment-input">
+        <button @click="createComment" class="btn btn-outline-primary py-1">submit</button>
+      </div>
     </div>
-    <input type="text" v-model="commentContent">
-    <button @click="createComment">submit</button>
   </div>
 </template>
 
@@ -47,6 +51,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .comment-container {
+    width: 65%;
+  }
+  .comment-input {
+    width: 30rem;
+  }
 </style>

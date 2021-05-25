@@ -17,7 +17,7 @@
         <p class="text-start article-preview">{{ articleContent }}</p>
       </div>
     </router-link>
-    <!-- 좋아요 수, 작성일 등 -->
+    <!-- 좋아요 수, 작성일 -->
     <p class="mb-0 text-dark">
       <span>{{ article.like_users.length}} likes • </span>
       <span>created at {{ article.created_at.slice(0,10) }}</span>
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .underline {
     text-decoration: underline;
   }
