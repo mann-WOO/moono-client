@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <div class="row gx-5 pt-5">
+    <div class="row gx-5 pt-5 mb-5">
       <img class="col-5" :src="movieDetail.poster_path" :alt="movieDetail.title">
       <div class="col-7">
         <div class="d-flex flex-column justify-content-center">
@@ -23,15 +23,25 @@
         </div>
       </div>
     </div>
+    <div class="container mb-3">
+      <h4 class="text-start fw-bold">전체 영화</h4>
+      <SplideComponent :movies="movies"/>
+    </div>
   </div>
 </template>
 
 <script>
+import SplideComponent from '@/components/SplideComponent'
+
 export default {
     name: 'MovieDetail',
+    components: {
+      SplideComponent,
+    },
     created: function () {
       this.$store.dispatch('getMovieDetail', this.$route.params.id)
       this.$store.dispatch('getUserMovieRank', this.$route.params.id)
+      this.$store.dispatch('getMovies')
     },
     updated: function () {
       this.setStars()
@@ -47,7 +57,10 @@ export default {
       },
       userMovieRank: function () {
         return this.$store.state.userMovieRank
-      }
+      },
+      movies: function () {
+        return this.$store.state.movies
+      },
     },
     methods: {
       // 별 색칠 초기화
@@ -122,11 +135,10 @@ export default {
 }
 </script>
 
-<style>
-import half-star from 
+<style> 
 
 .overview-box {
-  width:50%;
+  width:75%;
 }
 .star {
   width: 30px;

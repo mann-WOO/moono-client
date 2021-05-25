@@ -2,10 +2,10 @@
   <div class="section d-flex align-items-center justify-content-center container">
     <div class="d-flex flex-column align-items-start">
       <p class="mb-0">Title</p>
-      <input class="my-1" type="text" v-model="articleTitle">
+      <input class="my-1 text-input" type="text" v-model="articleTitle">
       <p class="mt-2 mb-0">Select Movie</p>
       <div class="d-flex">
-        <input class="me-1" disabled type="text" v-model="movieTitle">
+        <input class="me-1 text-input" disabled type="text" v-model="movieTitle">
         <!-- button trigger modal -->
         <button class="btn btn-outline-secondary py-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Search
@@ -62,10 +62,13 @@ export default {
 </script>
 
 <style>
-.ck-editor__editable{
-  height: 500px;
-}
-.ck.ck-editor{
-  width: 1000px
-}
+  .ck-editor__editable{
+    height: 500px;
+  }
+  .ck.ck-editor{
+    width: 1000px;
+  }
+  .text-input{
+    width: 350px;
+  }
 </style>

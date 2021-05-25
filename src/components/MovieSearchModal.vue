@@ -9,12 +9,12 @@
       <!-- modal body -->
       <div class="modal-body">
         <input type="text" v-model="searchInput" @keyup.enter="searchMovie">
-        <button @click="searchMovie">search</button>
+        <button class="btn btn-outline-secondary ms-1 py-1" @click="searchMovie">Search</button>
         <div v-if="searchedMovies">
           <br>
           <p v-for="movie in searchedMovies" :key="movie.id">
             {{movie.title}}
-            <button @click="selectMovie(movie.title, movie.id)" data-bs-dismiss="modal">
+            <button class="btn btn-outline-secondary py-0" @click="selectMovie(movie.title, movie.id)" data-bs-dismiss="modal">
               select
             </button>
           </p>
