@@ -2,7 +2,7 @@
   <div class="py-3 d-flex flex-column align-items-start" >
     <!-- 영화 상세페이지 링크 -->
     <router-link
-      class= "text-decoration-none "
+      class= "text-decoration-none mb-1"
       :to="{ name: 'MovieDetail', params: {id: article.movie} }">
     <p class="movie-of-article">{{ articleMovieTitle }}</p>
     </router-link>

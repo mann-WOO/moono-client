@@ -1,16 +1,39 @@
 <template>
-  <div class="container comment-container">
-    <div class="d-flex flex-column align-items-start">
+  <div class="container comment-container d-flex justify-content-center">
+    <div class="d-flex flex-column align-items-start comment-container">
       <h3>Comments</h3>
-      <div v-if="articleDetail.comment_set.length">
-        <p v-for="comment in articleDetail.comment_set" 
+      <!-- comments -->
+      <div 
+        class="d-flex flex-column align-items-start"
+        v-if="articleDetail.comment_set.length">
+        <div v-for="comment in articleDetail.comment_set" 
         :key="comment.id"
-        :id="'comment-' + comment.id">
-          <span>{{comment.content}}</span>
-          <button @click="startEdit(comment.id)">edit</button>
-          <button @click="deleteComment(comment.id)">delete</button>
-        </p>
+        :id="'comment-' + comment.id"
+        class="my-3 d-flex justify-content-start align-items-start">
+          <!-- comment item content -->
+          <div class="d-inline d-flex justify-content-start">
+            <img class="userlogo" src="@/assets/images/diver.svg" alt="">
+            <span class="ms-1 me-3"><strong>{{comment.user.username}}</strong></span>
+          </div>
+          <div class="d-inline text-start">
+            <span>{{comment.content}}</span>
+          </div>
+          <!-- comment item buttons -->
+          <div v-if="isMyComment(comment.user.username)" class="d-inline d-flex">
+            <button
+              class="mx-2 btn btn-outline-primary py-0"
+              @click="startEdit(comment.id)">
+              edit
+            </button>
+            <button 
+              class="btn btn-outline-danger py-0"
+              @click="deleteComment(comment.id)">
+              delete
+            </button>
+          </div>
+        </div>
       </div>
+      <!-- comment form -->
       <div class="d-flex">
         <input type="text" v-model="commentContent" class="me-1 comment-input">
         <button @click="createComment" class="btn btn-outline-primary py-1">submit</button>
@@ -46,6 +69,9 @@ export default {
     startEdit: function(commentId) {
       const targetComment = document.querySelector(`#comment-${commentId}`)
       console.log(targetComment)
+    },
+    isMyComment: function (username) {
+      return username===this.$store.getters.decodedToken.username
     }
   }
 }
@@ -53,9 +79,12 @@ export default {
 
 <style scoped>
   .comment-container {
-    width: 65%;
+    width: 67%;
   }
   .comment-input {
     width: 30rem;
+  }
+  .userlogo {
+    width: 2rem;
   }
 </style>

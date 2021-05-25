@@ -39,6 +39,11 @@
 
     <!-- 댓글 -->
     <Comment :articleDetail="articleDetail"/>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
 
