@@ -21,7 +21,7 @@
             <router-link class="nav-link text-dark" :to="{ name:'Movies'}">Movies</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-dark" :to="{ name:'Articles'}">Articles</router-link>
+            <router-link class="nav-link text-dark" :to="{ name:'Articles'}">Notes</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-dark" :to="{ name:'ArticleNew'}">Write</router-link>

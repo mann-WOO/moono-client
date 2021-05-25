@@ -20,6 +20,9 @@ export default new Vuex.Store({
     searchedMovies: null,
     userProfile: null,
     userMovieRank: null,
+    detailRelatedMovies: null,
+    keywordMovies: null,
+    userRecommendMovies: null,
   },
   mutations: {
     GET_MOVIES: function (state, movies) {
@@ -80,6 +83,15 @@ export default new Vuex.Store({
     },
     GET_USER_MOVIE_RANK: function (state, rank) {
       state.userMovieRank = rank
+    },
+    GET_RELATED_MOVIES: function (state, relatedMovies) {
+      state.detailRelatedMovies = relatedMovies
+    },
+    GET_KEYWORD_MOVIES: function (state, keywordMovies) {
+      state.keywordMovies = keywordMovies
+    },
+    GET_USER_RECOMMEND_MOVIES: function (state, userRecommendMovies) {
+      state.userRecommendMovies = userRecommendMovies
     }
   },
   actions: {
@@ -317,6 +329,48 @@ export default new Vuex.Store({
         })
         .catch(() => {
           context.commit('GET_USER_MOVIE_RANK', null)
+        })
+    },
+    // 개별 영화 페이지의 관련 영화 목록 불러오기
+    getRelatedMovies: function (context, movieId) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/${movieId}/recommendation/`
+      })
+        .then((res) => {
+          context.commit('GET_RELATED_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 키워드 추천 영화 리스트 가져오기
+    getKeywordMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/recommendation/`
+      })
+        .then((res) => {
+          context.commit('GET_KEYWORD_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })  
+    },
+    // 유저 평점 기반 추천 영화 리스트 가져오기
+    getUserRecommendMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/recommendation-user/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('GET_USER_RECOMMEND_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
         })
     }
   },

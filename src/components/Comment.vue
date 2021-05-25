@@ -36,7 +36,7 @@
       <!-- comment form -->
       <div class="d-flex">
         <input type="text" v-model="commentContent" class="me-1 comment-input">
-        <button @click="createComment" class="btn btn-outline-primary py-1">submit</button>
+        <button @click="createComment" class="btn btn-outline-primary py-1">New</button>
       </div>
     </div>
   </div>

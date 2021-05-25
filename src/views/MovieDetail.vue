@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="container mb-3">
-      <h4 class="text-start fw-bold">전체 영화</h4>
-      <SplideComponent :movies="movies"/>
+      <h4 class="text-start fw-bold">비슷한 영화</h4>
+      <SplideComponent :movies="relatedMovies"/>
     </div>
   </div>
 </template>
@@ -41,10 +41,20 @@ export default {
     created: function () {
       this.$store.dispatch('getMovieDetail', this.$route.params.id)
       this.$store.dispatch('getUserMovieRank', this.$route.params.id)
-      this.$store.dispatch('getMovies')
+      //
+      this.$store.dispatch('getRelatedMovies', this.$route.params.id)
     },
     updated: function () {
+      this.initStars()
       this.setStars()
+    },
+    // 추천 영화 클릭해 다른 detail 페이지로 이동할 때
+    watch: {
+      movieDetailId: function() {
+        this.$store.dispatch('getMovieDetail', this.$route.params.id)
+        this.$store.dispatch('getUserMovieRank', this.$route.params.id)
+        this.$store.dispatch('getRelatedMovies', this.$route.params.id)
+      }
     },
     computed: {
       movieDetail: function () {
@@ -58,8 +68,12 @@ export default {
       userMovieRank: function () {
         return this.$store.state.userMovieRank
       },
-      movies: function () {
-        return this.$store.state.movies
+      //
+      relatedMovies: function () {
+        return this.$store.state.detailRelatedMovies
+      },
+      movieDetailId: function () {
+        return this.$route.params.id
       },
     },
     methods: {

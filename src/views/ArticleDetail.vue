@@ -4,10 +4,28 @@
       <div class="d-flex flex-column align-items-center">
         <!-- head -->
         <h2 class="mb-3">{{ articleDetail.title }}</h2>
-        <p class="mb-0">about {{ articleMovieTitle }}</p>
+        <p class="mb-0">
+          about 
+          <router-link class= "text-decoration-none"
+            :to="{ name: 'MovieDetail', params: {id: articleDetail.movie} }">
+            <span class="movie-of-article">{{ articleMovieTitle }}</span>
+          </router-link>
+        </p>
         <p class="mb-0">
           <span>{{ articleDetail.created_at.slice(0,10) }} • </span>
-          <span>by {{articleDetail.user.username}}</span>
+          <span>
+            <router-link
+              class= "text-decoration-none text-dark"
+              :to="{ name: 'Profile', params: {username: articleDetail.user.username} }">
+              <span 
+                class="mb-0"
+                @mouseover="onMouseProfile"
+                @mouseout="outMouseProfile"
+                :class="{ underline:profileUnderline }">
+                by {{ articleDetail.user.username }}
+              </span>
+            </router-link>
+          </span>
         </p>
         <hr>
         <!-- article contents -->
@@ -38,12 +56,7 @@
 
 
     <!-- 댓글 -->
-    <Comment :articleDetail="articleDetail"/>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <Comment :articleDetail="articleDetail" class="mb-5"/>
   </div>
 </template>
 
@@ -53,7 +66,12 @@ import Comment from '@/components/Comment.vue'
 export default {
   name: 'ArticleDetail',
   components: {
-    Comment
+    Comment,
+  },
+  data: function () {
+    return {
+      profileUnderline: false
+    }
   },
   created: function () {
     this.$store.dispatch('getArticleDetail', this.$route.params.id)
@@ -81,7 +99,13 @@ export default {
     },
     toggleLike: function () {
       this.$store.dispatch('toggleLike', this.$route.params.id)
-    }
+    },
+    onMouseProfile: function () {
+      this.profileUnderline = true
+    },
+    outMouseProfile: function () {
+      this.profileUnderline = false
+    },
   }
 }
 </script>
@@ -95,5 +119,13 @@ export default {
   }
   .button-width {
     width: 4.5rem;
+  }
+  .movie-of-article {
+  color: #58a798;
+  margin-bottom: 0;
+  text-decoration: underline;
+  }
+  .underline {
+    text-decoration: underline;
   }
 </style>

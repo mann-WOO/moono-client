@@ -1,12 +1,12 @@
 <template>
-  <div class="d-flex flex-column mt-5 pt-5">
-    <div class="container">
-      <div v-for="article in articles" :key="article.id">
-        <Article :article="article"/>
-        <hr>
+    <div class="d-flex flex-column mt-5 pt-5">
+      <div class="container">
+        <div v-for="article in articles" :key="article.id">
+          <Article :article="article"/>
+          <hr>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
