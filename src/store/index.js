@@ -77,13 +77,15 @@ export default new Vuex.Store({
     },
     TOGGLE_FOLLOW: function (state, followStatus) {
       if (followStatus) {
-        state.userProfile.followers.push(this.getters.decodedToken.user_id)
+        const newFollower = {
+          ...this.getters.decodedToken,
+          id: this.getters.decodedToken.user_id}
+        state.userProfile.followers.push(newFollower)
       } else {
-        state.userProfile.followers = state.userProfile.followers.filter((userId) => {
-          return userId != this.getters.decodedToken.user_id
+        state.userProfile.followers = state.userProfile.followers.filter((follower) => {
+          return follower.id != this.getters.decodedToken.user_id
         })
       }
-      return 1
     },
     SET_RATING: function (state, rank) {
       state.userMovieRank = rank
@@ -328,7 +330,7 @@ export default new Vuex.Store({
         }
       })
         .then((res) => {
-          return context.commit('TOGGLE_FOLLOW', res.data.follow)
+          context.commit('TOGGLE_FOLLOW', res.data.follow)
         })
         .catch((err) => {
           console.log(err)

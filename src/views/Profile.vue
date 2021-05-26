@@ -92,9 +92,8 @@ export default {
   },
   methods: {
     // async await - state 변화 일어나면 프로필정보 새로고침
-    toggleFollow: async function () {
-      await this.$store.dispatch('toggleFollow', this.$route.params.username)
-      this.$store.dispatch('getProfile', this.$route.params.username)
+    toggleFollow: function () {
+      this.$store.dispatch('toggleFollow', this.$route.params.username)
     },
     onMousefollow: function (event) {
       event.target.innerText = "follow"

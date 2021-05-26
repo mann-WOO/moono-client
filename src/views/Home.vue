@@ -33,7 +33,7 @@
             <span v-for="keyword in keywords" :key="keyword.id">
               {{ keyword.name }}
             </span>
-            </h4>
+          </h4>
         </div>
         <SplideComponent :movies="keywordMovies"/>
       </div>

@@ -60,12 +60,17 @@ export default {
       this.initStars()
       this.setStars()
     },
+    // 스크롤바 작동오류 해결
+    mounted: function () {
+      window.scrollTo(0,0)
+    },
     // 추천 영화 클릭해 다른 detail 페이지로 이동할 때
     watch: {
       movieDetailId: function() {
         this.$store.dispatch('getMovieDetail', this.$route.params.id)
         this.$store.dispatch('getUserMovieRank', this.$route.params.id)
         this.$store.dispatch('getRelatedMovies', this.$route.params.id)
+        window.scrollTo(0,0)
       }
     },
     computed: {
