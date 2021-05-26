@@ -25,19 +25,35 @@
           <span>{{ followersCount }} followers • </span>
           <span>{{ userProfile.followings_count }} followings</span>
         </p>
-        <h4 class="text-start">평점을 준 영화</h4>
-        <h4 class="text-start">작성한 노트</h4>
-        <p>{{ userProfile }}</p>
+        <div class="container mt-5">
+          <h4 class="text-start fw-bold">{{ this.$route.params.username }}님이 평점을 준 영화</h4>
+          <SplideComponent :movies="ratedMovies"/>
+        </div>
+        <div v-if="userArticles.length" class="container mt-5 mb-5">
+          <h4 class="text-start fw-bold">{{ this.$route.params.username }}님이 작성한 노트</h4>
+          <ArticleSplide :articles="userArticles"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import SplideComponent from '@/components/SplideComponent'
+import ArticleSplide from '@/components/ArticleSplide'
+
 export default {
   name: 'Profile',
   created: function () {
+    if (!this.$store.state.userToken) {
+      this.$router.push({ name:'Login' })
+      return
+    }    
     this.$store.dispatch('getProfile', this.$route.params.username)
+  },
+  components: {
+    SplideComponent,
+    ArticleSplide,
   },
   watch: {
     profileUsername: function () {
@@ -62,6 +78,17 @@ export default {
     profileUsername: function () {
       return this.$route.params.username
     },
+    userArticles: function () {
+      return this.userProfile.articles
+    },
+    ratedMovies: function () {
+      const ratedMovieIds = this.userProfile.ranks.map((rank) => {
+        return rank.movie
+      })
+      return this.$store.state.movies.filter((movie) => {
+        return ratedMovieIds.includes(movie.id)
+      })
+    }
   },
   methods: {
     // async await - state 변화 일어나면 프로필정보 새로고침

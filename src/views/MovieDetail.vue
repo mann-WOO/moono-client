@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5 mb-5">
     <div class="row gx-5 pt-5 mb-5">
       <img class="col-5" :src="movieDetail.poster_path" :alt="movieDetail.title">
       <div class="col-7">
@@ -27,18 +27,30 @@
       <h4 class="text-start fw-bold">비슷한 영화</h4>
       <SplideComponent :movies="relatedMovies"/>
     </div>
+    <div v-if="movieDetail.articles.length" class="container">
+      <h4 class="text-start fw-bold">
+        이 영화에 관한 노트
+      </h4>
+      <ArticleSplide :articles="movieDetail.articles"/>
+    </div>
   </div>
 </template>
 
 <script>
 import SplideComponent from '@/components/SplideComponent'
+import ArticleSplide from '@/components/ArticleSplide'
 
 export default {
     name: 'MovieDetail',
     components: {
       SplideComponent,
+      ArticleSplide,
     },
     created: function () {
+      if (!this.$store.state.userToken) {
+        this.$router.push({ name:'Login' })
+        return
+      }
       this.$store.dispatch('getMovieDetail', this.$route.params.id)
       this.$store.dispatch('getUserMovieRank', this.$route.params.id)
       //

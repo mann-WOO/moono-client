@@ -74,6 +74,10 @@ export default {
     }
   },
   created: function () {
+    if (!this.$store.state.userToken) {
+      this.$router.push({ name:'Login' })
+      return
+    }
     this.$store.dispatch('getArticleDetail', this.$route.params.id)
   },
   computed: {

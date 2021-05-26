@@ -24,6 +24,7 @@
     </p>
     <!-- 글쓴이 프로필 링크 -->
     <router-link
+      v-if="article.user.username"
       class= "text-decoration-none text-dark"
       :to="{ name: 'Profile', params: {username: article.user.username} }">
       <p 

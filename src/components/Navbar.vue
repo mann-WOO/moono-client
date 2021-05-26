@@ -1,5 +1,5 @@
 <template>
-  <nav class="px-3 navbar fixed-top navbar-expand-lg navbar-light my-3">
+  <nav class="px-3 navbar fixed-top navbar-expand-lg navbar-light py-4 bg-white">
   <div class="container-fluid">
     <!-- 로고 -->
     <router-link class="navbar-brand d-flex align-items-center gap-2" :to="{ name:'Home' }">

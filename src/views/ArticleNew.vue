@@ -31,6 +31,12 @@ export default {
     ckeditor: CKEditor.component,
     MovieSearchModal: MovieSearchModal,
   },
+  created: function () {
+    if (!this.$store.state.userToken) {
+      this.$router.push({ name:'Login' })
+      return
+    }
+  },
   data: function () {
     return {
       // CKEditor

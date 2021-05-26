@@ -29,8 +29,8 @@ export default {
     },
   computed: {
     movieTitle: function () {
-      if (this.movie.title.length > 14) {
-        return this.movie.title.slice(0, 15) + '...'
+      if (this.movie.title.length > 13) {
+        return this.movie.title.slice(0, 13) + '...'
       } else {
         return this.movie.title
       }
