@@ -27,7 +27,9 @@
             </button>
             <button 
               class="btn btn-outline-danger py-0"
-              @click="deleteComment(comment.id)">
+              data-bs-toggle="modal"
+              data-bs-target="#commentDeleteModal"
+              @click="modalDeleteComment(comment.id)">
               delete
             </button>
           </div>
@@ -37,6 +39,24 @@
       <div class="d-flex">
         <input type="text" v-model="commentContent" class="me-1 comment-input">
         <button @click="createComment" class="btn btn-outline-primary py-1">New</button>
+      </div>
+      <!-- comment delete modal -->
+      <div class="modal fade" id="commentDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">댓글 삭제</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말 삭제하시겠어요?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary py-1" data-bs-dismiss="modal">Close</button>
+              <button @click="deleteComment(deleteModalId)" type="button" class="btn btn-outline-danger py-1" data-bs-dismiss="modal">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +70,8 @@ export default {
   },
   data: function () {
     return {
-      commentContent: ''
+      commentContent: '',
+      deleteModalId: '',
     }
   },
   methods: {
@@ -62,6 +83,9 @@ export default {
       }
       this.$store.dispatch('createComment', commentData)
       this.commentContent = ''
+    },
+    modalDeleteComment: function (commentId) {
+      this.deleteModalId = commentId
     },
     deleteComment: function (commentId) {
       this.$store.dispatch('deleteComment', commentId)

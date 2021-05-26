@@ -45,11 +45,34 @@
           </div>
           <!-- delete button 추후 모달로 업데이트 -->
           <div v-if="isMyArticle" class="ms-3">
-            <button class="btn btn-outline-danger py-1 button-width" @click="deleteArticle">delete</button>
+            <button 
+              class="btn btn-outline-danger py-1 button-width"
+              data-bs-toggle="modal"
+              data-bs-target="#articleDeleteModal">
+              delete
+            </button>
           </div>
         </div>
         <!-- article content end -->
         <hr>
+        <!-- article delete modal -->
+        <div class="modal fade" id="articleDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">노트 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                정말 삭제하시겠어요?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary py-1" data-bs-dismiss="modal">Close</button>
+                <button @click="deleteArticle" type="button" class="btn btn-outline-danger py-1" data-bs-dismiss="modal">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
