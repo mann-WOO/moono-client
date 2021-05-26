@@ -55,13 +55,21 @@ export default {
       this.movieId = id
     },
     createArticle: function () {
-      const articleData = {
-        title: this.articleTitle,
-        content: this.editorData,
-        movie: this.movieId,
-        user: this.$store.getters.decodedToken.user_id
+      if (!this.articleTitle) {
+        alert('제목을 입력해주세요!')
+      } else if (!this.movieId) {
+        alert('영화를 선택해주세요!')
+      } else if (!this.editorData) {
+        alert('노트 내용을 입력해주세요!')
+      } else {
+        const articleData = {
+          title: this.articleTitle,
+          content: this.editorData,
+          movie: this.movieId,
+          user: this.$store.getters.decodedToken.user_id
+        }
+        this.$store.dispatch('createArticle', articleData)
       }
-      this.$store.dispatch('createArticle', articleData)
     }
   }
 }

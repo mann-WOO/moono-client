@@ -76,13 +76,17 @@ export default {
   },
   methods: {
     createComment: function () {
-      const commentData = {
-        content: this.commentContent,
-        user: this.$store.getters.decodedToken.user_id,
-        article: this.$route.params.id
+      if (!this.commentContent) {
+        alert('댓글 내용을 입력해주세요!')
+      } else {
+        const commentData = {
+          content: this.commentContent,
+          user: this.$store.getters.decodedToken.user_id,
+          article: this.$route.params.id
+        }
+        this.$store.dispatch('createComment', commentData)
+        this.commentContent = ''
       }
-      this.$store.dispatch('createComment', commentData)
-      this.commentContent = ''
     },
     modalDeleteComment: function (commentId) {
       this.deleteModalId = commentId
