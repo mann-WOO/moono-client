@@ -154,8 +154,8 @@ export default new Vuex.Store({
           context.commit('GET_TOKEN', res.data.token)
           router.push( {name:'Home'} )
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          alert('입력한 회원정보가 존재하지 않습니다. 다시 확인해주세요.')
         })
     },
     // JWT 토큰 삭제(로그아웃)

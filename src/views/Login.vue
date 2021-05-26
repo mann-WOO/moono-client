@@ -24,14 +24,13 @@ export default {
     }
   },
   methods: {
-    getToken: async function () {
+    getToken: function () {
       if (!this.credentials.username) {
         alert('ID를 입력해주세요.')
       } else if (!this.credentials.password) {
         alert('비밀번호를 입력해주세요.')
       } else {
-        const err = await this.$store.dispatch('getToken', this.credentials)
-        console.log(err)
+        this.$store.dispatch('getToken', this.credentials)
       }
     }
   }
