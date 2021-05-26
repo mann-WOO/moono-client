@@ -22,7 +22,9 @@
           <div v-if="isMyComment(comment.user.username)" class="d-inline d-flex">
             <button
               class="mx-2 btn btn-outline-primary py-0"
-              @click="startEdit(comment.id)">
+              data-bs-toggle="modal"
+              data-bs-target="#commentUpdateModal"
+              @click="modalUpdateComment(comment.id)">
               edit
             </button>
             <button 
@@ -53,7 +55,25 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary py-1" data-bs-dismiss="modal">Close</button>
-              <button @click="deleteComment(deleteModalId)" type="button" class="btn btn-outline-danger py-1" data-bs-dismiss="modal">Delete</button>
+              <button @click="deleteComment()" type="button" class="btn btn-outline-danger py-1" data-bs-dismiss="modal">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- comment update modal -->
+      <div class="modal fade" id="commentUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">댓글 수정</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input class="w-100" type="text" v-model="updatedCommentContent">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary py-1" data-bs-dismiss="modal">Close</button>
+              <button @click="updateComment()" type="button" class="btn btn-outline-primary py-1" data-bs-dismiss="modal">Update</button>
             </div>
           </div>
         </div>
@@ -72,6 +92,8 @@ export default {
     return {
       commentContent: '',
       deleteModalId: '',
+      updateModalId: '',
+      updatedCommentContent: '',
     }
   },
   methods: {
@@ -91,12 +113,22 @@ export default {
     modalDeleteComment: function (commentId) {
       this.deleteModalId = commentId
     },
-    deleteComment: function (commentId) {
-      this.$store.dispatch('deleteComment', commentId)
+    deleteComment: function () {
+      this.$store.dispatch('deleteComment', this.deleteModalId)
     },
-    startEdit: function(commentId) {
-      const targetComment = document.querySelector(`#comment-${commentId}`)
-      console.log(targetComment)
+    modalUpdateComment: function (commentId) {
+      this.updateModalId = commentId
+      const comment = this.articleDetail.comment_set.find((comment) => {
+        return comment.id == commentId
+      })
+      this.updatedCommentContent = comment.content
+    },
+    updateComment: function () {
+      const data = {
+        commentId: this.updateModalId,
+        content: this.updatedCommentContent,
+      }
+      this.$store.dispatch('updateComment', data)
     },
     isMyComment: function (username) {
       return username===this.$store.getters.decodedToken.username

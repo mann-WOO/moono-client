@@ -117,6 +117,16 @@ export default new Vuex.Store({
     },
     GET_KEYWORD: function (state, keywords) {
       state.keywords = keywords
+    },
+    UPDATE_COMMENT: function (state, updatedComment) {
+      state.articleDetail.comment_set.map((comment) => {
+        if (comment.id == updatedComment.commentId) {
+          comment.content = updatedComment.content
+          return comment
+        } else {
+          return comment
+        }
+      })
     }
   },
   actions: {
@@ -477,6 +487,23 @@ export default new Vuex.Store({
       })
         .then((res) => {
           context.commit('GET_KEYWORD', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 댓글 수정
+    updateComment: function (context, data) {
+      axios({
+        method: 'put',
+        url: `${SERVER_URL}/articles/comments/${data.commentId}/`,
+        data: {content: data.content},
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then(() => {
+          context.commit('UPDATE_COMMENT', data)
         })
         .catch((err) => {
           console.log(err)
