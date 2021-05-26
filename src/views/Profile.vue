@@ -20,7 +20,15 @@
         </div>
       </div>
       <!-- profile contents -->
-      <p>{{ userProfile.username }}</p>
+      <div>
+        <p class="text-start">
+          <span>{{ followersCount }} followers • </span>
+          <span>{{ userProfile.followings_count }} followings</span>
+        </p>
+        <h4 class="text-start">평점을 준 영화</h4>
+        <h4 class="text-start">작성한 노트</h4>
+        <p>{{ userProfile }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -31,20 +39,35 @@ export default {
   created: function () {
     this.$store.dispatch('getProfile', this.$route.params.username)
   },
+  watch: {
+    profileUsername: function () {
+      this.$store.dispatch('getProfile', this.$route.params.username)
+    },
+  },
   computed: {
     userProfile: function () {
       return this.$store.state.userProfile
     },
     followStatus: function () {
-      return this.userProfile.followers.includes(this.$store.getters.decodedToken.user_id)
+      return this.userProfile.followers.some((follower) => {
+        return follower.id === this.$store.getters.decodedToken.user_id
+      })
     },
     isMyProfile: function () {
       return this.$route.params.username===this.$store.getters.decodedToken.username
-    }
+    },
+    followersCount: function () {
+      return this.userProfile.followers.length
+    },
+    profileUsername: function () {
+      return this.$route.params.username
+    },
   },
   methods: {
-    toggleFollow: function () {
-      this.$store.dispatch('toggleFollow', this.$route.params.username)
+    // async await - state 변화 일어나면 프로필정보 새로고침
+    toggleFollow: async function () {
+      await this.$store.dispatch('toggleFollow', this.$route.params.username)
+      this.$store.dispatch('getProfile', this.$route.params.username)
     },
     onMousefollow: function (event) {
       event.target.innerText = "follow"

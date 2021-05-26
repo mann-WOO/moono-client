@@ -77,6 +77,7 @@ export default new Vuex.Store({
           return userId != this.getters.decodedToken.user_id
         })
       }
+      return 1
     },
     SET_RATING: function (state, rank) {
       state.userMovieRank = rank
@@ -290,7 +291,7 @@ export default new Vuex.Store({
         }
       })
         .then((res) => {
-          context.commit('TOGGLE_FOLLOW', res.data.follow)
+          return context.commit('TOGGLE_FOLLOW', res.data.follow)
         })
         .catch((err) => {
           console.log(err)

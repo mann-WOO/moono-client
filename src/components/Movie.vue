@@ -1,13 +1,6 @@
 <template>
   <div class="my-1 mx-1 px-2 py-2 rounded" :class="{ shadow: upHere }" @mouseover="upHere = true" @mouseleave="upHere = false">
     <router-link class="h-100 text-decoration-none text-dark" :to="{ name: 'MovieDetail', params: {id: movie.id}}">
-      <!-- <div class="card border-0">
-        <img :data-splide-lazy="movie.poster_path" class="poster-card card-img-top" :alt="movie.title">
-        <div class="card-body">
-          <p class="card-text fw-bold">{{ movie.title }}</p>
-          <p class="card-text text-secondary">{{ movie.release_date }}</p>
-        </div>
-      </div> -->
       <div class="d-flex flex-column h-100">
         <img 
           class="rounded"

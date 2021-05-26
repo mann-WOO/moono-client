@@ -30,8 +30,8 @@
         <SplideComponent :movies="movies"/>
       </div>
       <div class="container">
-        <h4 class="text-start fw-bold">키워드 추천 영화</h4>
-        <SplideComponent :movies="movies"/>
+        <h4 class="text-start fw-bold">키워드 추천 노트</h4>
+        <ArticleSplide :articles="articles"/>
       </div>
     </div>
   </div>
@@ -39,16 +39,19 @@
 
 <script>
 import SplideComponent from '@/components/SplideComponent.vue'
+import ArticleSplide from '@/components/ArticleSplide.vue'
 
 export default {
   name: 'Home',
   components: {
     SplideComponent,
+    ArticleSplide,
   },
   created: function () {
     this.$store.dispatch('getKeywordMovies')
     // 슬라이드 위해서 뿐 아니라 반드시 있어야함 Article에서 쓴다.
     this.$store.dispatch('getMovies')
+    this.$store.dispatch('getArticles')
   },
   computed: {
     movies: function () {
@@ -56,6 +59,9 @@ export default {
     },
     keywordMovies: function () {
       return this.$store.state.keywordMovies
+    },
+    articles: function () {
+      return this.$store.state.articles
     }
   }
 }
