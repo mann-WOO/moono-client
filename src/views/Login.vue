@@ -25,7 +25,13 @@ export default {
   },
   methods: {
     getToken: function () {
-      this.$store.dispatch('getToken', this.credentials)
+      if (!this.credentials.username) {
+        alert('ID를 입력해주세요.')
+      } else if (!this.credentials.password) {
+        alert('비밀번호를 입력해주세요.')
+      } else {
+        this.$store.dispatch('getToken', this.credentials)
+      }
     }
   }
 }

@@ -20,6 +20,15 @@ export default new Vuex.Store({
     searchedMovies: null,
     userProfile: null,
     userMovieRank: null,
+    detailRelatedMovies: null,
+    keywordMovies: null,
+    userRecommendMovies: null,
+    userRecommendArticles: null,
+    keywordArticles: null,
+    latestMovies: null,
+    popularMovies: null,
+    topRatedMovies: null,
+    keywords: null,
   },
   mutations: {
     GET_MOVIES: function (state, movies) {
@@ -68,10 +77,13 @@ export default new Vuex.Store({
     },
     TOGGLE_FOLLOW: function (state, followStatus) {
       if (followStatus) {
-        state.userProfile.followers.push(this.getters.decodedToken.user_id)
+        const newFollower = {
+          ...this.getters.decodedToken,
+          id: this.getters.decodedToken.user_id}
+        state.userProfile.followers.push(newFollower)
       } else {
-        state.userProfile.followers = state.userProfile.followers.filter((userId) => {
-          return userId != this.getters.decodedToken.user_id
+        state.userProfile.followers = state.userProfile.followers.filter((follower) => {
+          return follower.id != this.getters.decodedToken.user_id
         })
       }
     },
@@ -80,6 +92,43 @@ export default new Vuex.Store({
     },
     GET_USER_MOVIE_RANK: function (state, rank) {
       state.userMovieRank = rank
+    },
+    GET_RELATED_MOVIES: function (state, relatedMovies) {
+      state.detailRelatedMovies = relatedMovies
+    },
+    GET_KEYWORD_MOVIES: function (state, keywordMovies) {
+      state.keywordMovies = keywordMovies
+    },
+    GET_KEYWORD_ARTICLES: function (state, keywordArticles) {
+      state.keywordArticles = keywordArticles
+    },
+    GET_USER_RECOMMEND_MOVIES: function (state, userRecommendMovies) {
+      state.userRecommendMovies = userRecommendMovies
+    },
+    GET_USER_RECOMMEND_ARTICLES: function (state, userRecommendArticles) {
+      state.userRecommendArticles = userRecommendArticles
+    },
+    GET_LATEST_MOVIES: function (state, latestMovies) {
+      state.latestMovies = latestMovies
+    },
+    GET_POPULAR_MOVIES: function (state, popularMovies) {
+      state.popularMovies = popularMovies
+    },
+    GET_TOP_RATED_MOVIES: function (state, topRatedMovies) {
+      state.topRatedMovies = topRatedMovies
+    },
+    GET_KEYWORD: function (state, keywords) {
+      state.keywords = keywords
+    },
+    UPDATE_COMMENT: function (state, updatedComment) {
+      state.articleDetail.comment_set.map((comment) => {
+        if (comment.id == updatedComment.commentId) {
+          comment.content = updatedComment.content
+          return comment
+        } else {
+          return comment
+        }
+      })
     }
   },
   actions: {
@@ -116,6 +165,9 @@ export default new Vuex.Store({
         .then((res) => {
           context.commit('GET_TOKEN', res.data.token)
           router.push( {name:'Home'} )
+        })
+        .catch(() => {
+          alert('입력한 회원정보가 존재하지 않습니다. 다시 확인해주세요.')
         })
     },
     // JWT 토큰 삭제(로그아웃)
@@ -317,6 +369,146 @@ export default new Vuex.Store({
         })
         .catch(() => {
           context.commit('GET_USER_MOVIE_RANK', null)
+        })
+    },
+    // 개별 영화 페이지의 관련 영화 목록 불러오기
+    getRelatedMovies: function (context, movieId) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/${movieId}/recommendation/`
+      })
+        .then((res) => {
+          context.commit('GET_RELATED_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 키워드 추천 영화 리스트 가져오기
+    getKeywordMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/recommendation/`
+      })
+        .then((res) => {
+          context.commit('GET_KEYWORD_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })  
+    },
+    // 키워드 추천 노트 리스트 가져오기
+    getKeywordArticles: function (context ) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/articles/recommendation/`
+      })
+        .then((res) => {
+          context.commit('GET_KEYWORD_ARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 유저 평점 기반 추천 영화 리스트 가져오기
+    getUserRecommendMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/recommendation-user/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('GET_USER_RECOMMEND_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 유저 평점 기반 추천 아티클 리스트 가져오기
+    getUserRecommendArticles: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/articles/recommendation-user/`,
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then((res) => {
+          context.commit('GET_USER_RECOMMEND_ARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 최신 영화 가져오기
+    getLatestMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/release-date/`
+      })
+        .then((res) => {
+          context.commit('GET_LATEST_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })  
+    },
+    // TMDB에서 가장 인기 많은 영화 가져오기
+    getPopularMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/vote-count/`
+      })
+        .then((res) => {
+          context.commit('GET_POPULAR_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })  
+    },
+    // MOONO 평점 가장 높은 영화 가져오기
+    getTopRatedMovies: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/rating/`
+      })
+        .then((res) => {
+          context.commit('GET_TOP_RATED_MOVIES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })  
+    },
+    // 키워드 가져오기
+    getKeyword: function (context) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/keyword/`
+      })
+        .then((res) => {
+          context.commit('GET_KEYWORD', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    // 댓글 수정
+    updateComment: function (context, data) {
+      axios({
+        method: 'put',
+        url: `${SERVER_URL}/articles/comments/${data.commentId}/`,
+        data: {content: data.content},
+        headers: {
+          Authorization: `JWT ${context.state.userToken}`
+        }
+      })
+        .then(() => {
+          context.commit('UPDATE_COMMENT', data)
+        })
+        .catch((err) => {
+          console.log(err)
         })
     }
   },

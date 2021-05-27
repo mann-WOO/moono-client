@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-5">
-    <div class="row gx-5 pt-5">
+  <div class="container mt-5 mb-5">
+    <div class="row gx-5 pt-5 mb-5">
       <img class="col-5" :src="movieDetail.poster_path" :alt="movieDetail.title">
       <div class="col-7">
         <div class="d-flex flex-column justify-content-center">
@@ -23,18 +23,55 @@
         </div>
       </div>
     </div>
+    <div class="container mb-3">
+      <h4 class="text-start fw-bold">비슷한 영화</h4>
+      <SplideComponent :movies="relatedMovies"/>
+    </div>
+    <div v-if="movieDetail.articles.length" class="container">
+      <h4 class="text-start fw-bold">
+        이 영화에 관한 노트
+      </h4>
+      <ArticleSplide :articles="movieDetail.articles"/>
+    </div>
   </div>
 </template>
 
 <script>
+import SplideComponent from '@/components/SplideComponent'
+import ArticleSplide from '@/components/ArticleSplide'
+
 export default {
     name: 'MovieDetail',
+    components: {
+      SplideComponent,
+      ArticleSplide,
+    },
     created: function () {
+      if (!this.$store.state.userToken) {
+        this.$router.push({ name:'Login' })
+        return
+      }
       this.$store.dispatch('getMovieDetail', this.$route.params.id)
       this.$store.dispatch('getUserMovieRank', this.$route.params.id)
+      //
+      this.$store.dispatch('getRelatedMovies', this.$route.params.id)
     },
     updated: function () {
+      this.initStars()
       this.setStars()
+    },
+    // 스크롤바 작동오류 해결
+    mounted: function () {
+      window.scrollTo(0,0)
+    },
+    // 추천 영화 클릭해 다른 detail 페이지로 이동할 때
+    watch: {
+      movieDetailId: function() {
+        this.$store.dispatch('getMovieDetail', this.$route.params.id)
+        this.$store.dispatch('getUserMovieRank', this.$route.params.id)
+        this.$store.dispatch('getRelatedMovies', this.$route.params.id)
+        window.scrollTo(0,0)
+      }
     },
     computed: {
       movieDetail: function () {
@@ -47,7 +84,14 @@ export default {
       },
       userMovieRank: function () {
         return this.$store.state.userMovieRank
-      }
+      },
+      //
+      relatedMovies: function () {
+        return this.$store.state.detailRelatedMovies
+      },
+      movieDetailId: function () {
+        return this.$route.params.id
+      },
     },
     methods: {
       // 별 색칠 초기화
@@ -122,11 +166,10 @@ export default {
 }
 </script>
 
-<style>
-import half-star from 
+<style> 
 
 .overview-box {
-  width:50%;
+  width:75%;
 }
 .star {
   width: 30px;

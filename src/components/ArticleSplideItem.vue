@@ -1,5 +1,5 @@
 <template>
-  <div class="py-3 d-flex flex-column align-items-start" >
+  <div class="py-3 px-3 d-flex flex-column align-items-center" >
     <!-- 영화 상세페이지 링크 -->
     <router-link
       class= "text-decoration-none mb-1"
@@ -12,9 +12,9 @@
       :to="{ name: 'ArticleDetail', params: {id: article.id}}"
     >
       <div @mouseover="onMouse" @mouseout="outMouse"
-        class="d-flex flex-column align-items-start">
+        class="d-flex flex-column align-items-center">
         <h4 id="title" class="mb-3" :class="{ underline:isUnderline }">{{article.title}}</h4>
-        <p class="text-start article-preview">{{ articleContent }}</p>
+        <p class="text-center article-preview">{{ articleContent }}</p>
       </div>
     </router-link>
     <!-- 좋아요 수, 작성일 -->
@@ -24,6 +24,7 @@
     </p>
     <!-- 글쓴이 프로필 링크 -->
     <router-link
+      v-if="article.user.username"
       class= "text-decoration-none text-dark"
       :to="{ name: 'Profile', params: {username: article.user.username} }">
       <p 

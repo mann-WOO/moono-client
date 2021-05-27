@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light my-3">
+  <nav class="px-3 navbar fixed-top navbar-expand-lg navbar-light py-4 bg-white">
   <div class="container-fluid">
     <!-- 로고 -->
     <router-link class="navbar-brand d-flex align-items-center gap-2" :to="{ name:'Home' }">
@@ -15,26 +15,26 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name:'Home' }">Home</router-link>
+            <router-link class="nav-link text-dark" :to="{ name:'Home' }">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name:'Movies'}">Movies</router-link>
+            <router-link class="nav-link text-dark" :to="{ name:'Movies'}">Movies</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name:'Articles'}">Articles</router-link>
+            <router-link class="nav-link text-dark" :to="{ name:'Articles'}">Notes</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name:'ArticleNew'}">Write</router-link>
+            <router-link class="nav-link text-dark" :to="{ name:'ArticleNew'}">Write</router-link>
           </li>
           <li class="nav-item">
             <router-link 
               :to="{ name:'Profile', params:{username:this.$store.getters.decodedToken.username} }" 
-              class="nav-link">
+              class="nav-link text-dark">
               Profile
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="#" @click.native="deleteToken" class="nav-link">Logout</router-link>
+            <router-link to="#" @click.native="deleteToken" class="nav-link text-dark">Logout</router-link>
           </li>
         </ul>
       </div>

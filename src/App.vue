@@ -11,7 +11,7 @@ import Navbar from '@/components/Navbar.vue'
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
   },
   methods: {
     deleteToken: function () {
@@ -53,12 +53,6 @@ export default {
   background-color: #61BFAD !important;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #61BFAD;
-  border-color: #61BFAD;
-}
-
 .btn-outline-primary {
   color: #61BFAD;
   border-color: #61BFAD;
@@ -85,7 +79,33 @@ export default {
   border-color:  #61BFAD;
 }
 
-.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+.btn-primary {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #be5d6d;
+  border-color: #be5d6d;
+}
+.btn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+  box-shadow: 0 0 0 0.2rem rgba(28, 160, 138, 0.705);
+}
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #61BFAD;
+  border-color: #61BFAD;
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(28, 160, 138, 0.705);
 }
 </style>

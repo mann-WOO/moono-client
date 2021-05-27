@@ -30,18 +30,27 @@ export default {
   },
   methods: {
     signup: function () {
-      axios({
-        method: 'post',
-        url: `${SERVER_URL}/accounts/signup/`,
-        data: this.credentials,
-      })
-        .then((res) => {
-          console.log(res)
-          this.$router.push({ name:'Login' })
+      if (!this.credentials.username) {
+        alert('ID를 입력해주세요.')
+      } else if (!this.credentials.password) {
+        alert('비밀번호를 입력해주세요.')
+      } else if (!this.credentials.passwordConfirmation) {
+        alert('비밀번호 확인란을 입력해주세요.')
+      } else if (this.credentials.password !== this.credentials.passwordConfirmation) {
+        alert('입력하신 비밀번호와 비밀번호 확인란이 일치하지 않습니다.')
+      } else {
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/accounts/signup/`,
+          data: this.credentials,
         })
-        .then((err) => {
-          console.log(err)
-        })
+          .then(() => {
+            this.$router.push({ name:'Login' })
+          })
+          .catch(() => {
+            alert('사용할 수 없는 ID 입니다. 다른 ID를 입력해주세요.')
+          })
+      }
     }
   }
 }
