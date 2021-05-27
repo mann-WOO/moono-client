@@ -1,5 +1,5 @@
 <template>
-  <splide :options="options">
+  <splide :options="options" :slides="movies">
     <splide-slide class="movie-component" v-for="movie in movies" :key="movie.id">
       <Movie :movie="movie"/>
     </splide-slide>

@@ -1,5 +1,5 @@
 <template>
-  <splide :options="options">
+  <splide :options="options" :slides="articles">
     <splide-slide class="article-component" v-for="article in articles" :key="article.id">
       <ArticleSplideItem :article="article"/>
     </splide-slide>
